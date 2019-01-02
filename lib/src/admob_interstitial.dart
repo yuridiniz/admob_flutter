@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'admob_event_handler.dart';
+import 'admob_target_info.dart';
 
 class AdmobInterstitial extends AdmobEventHandler {
   static const MethodChannel _channel =
@@ -9,12 +10,12 @@ class AdmobInterstitial extends AdmobEventHandler {
   int id;
   MethodChannel _adChannel;
   final String adUnitId;
-  final String testDeviceId;
+  final AdmobTargetInfo targetInfo;
   final void Function(AdmobAdEvent, Map<String, dynamic>) listener;
 
   AdmobInterstitial({
     @required this.adUnitId,
-    this.testDeviceId,
+    this.targetInfo,
     this.listener,
   }) : super(listener) {
     id = hashCode;
@@ -38,8 +39,8 @@ class AdmobInterstitial extends AdmobEventHandler {
       'adUnitId': adUnitId,
     };
 
-    if (testDeviceId != null) {
-      loadVals.putIfAbsent('testDeviceId', () => testDeviceId);
+    if (targetInfo != null) {
+      loadVals.putIfAbsent('targetInfo', () => targetInfo.toMap);
     }
 
     await _channel.invokeMethod('load', loadVals);

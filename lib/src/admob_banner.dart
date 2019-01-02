@@ -4,11 +4,12 @@ import 'package:flutter/services.dart';
 import 'admob_banner_controller.dart';
 import 'admob_banner_size.dart';
 import 'admob_events.dart';
+import 'admob_target_info.dart';
 
 class AdmobBanner extends StatefulWidget {
   final String adUnitId;
   final AdmobBannerSize adSize;
-  final String testDeviceId;
+  final AdmobTargetInfo targetInfo;
   final void Function(AdmobAdEvent, Map<String, dynamic>) listener;
   final void Function(AdmobBannerController) onBannerCreated;
 
@@ -16,7 +17,7 @@ class AdmobBanner extends StatefulWidget {
     Key key,
     @required this.adUnitId,
     @required this.adSize,
-    this.testDeviceId,
+    this.targetInfo,
     this.listener,
     this.onBannerCreated,
   }) : super(key: key);
@@ -35,8 +36,8 @@ class _AdmobBannerState extends State<AdmobBanner> {
       "adSize": widget.adSize.toMap,
     };
 
-    if (widget.testDeviceId != null) {
-      params.putIfAbsent('testDeviceId', () => widget.testDeviceId);
+    if (widget.targetInfo != null) {
+      params.putIfAbsent('targetInfo', () => widget.targetInfo.toMap);
     }
 
     if (defaultTargetPlatform == TargetPlatform.android) {

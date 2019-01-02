@@ -1,5 +1,9 @@
 package com.shatsy.admobflutter
 
+import android.os.Bundle
+import android.os.IBinder
+import android.os.Parcelable
+import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import io.flutter.plugin.common.MethodCall
@@ -22,14 +26,10 @@ class AdmobInterstitial(private val registrar: PluginRegistry.Registrar): Method
       "load" -> {
         val id = call.argument<Int>("id")
         val adUnitId = call.argument<String>("adUnitId")
-        val builder = AdRequest.Builder()
 
-        if(call.hasArgument("testDeviceId")){
-          val testDeviceId = call.argument<String>("testDeviceId")
-          builder.addTestDevice(testDeviceId)
-        }
+        val targetInfo = call.argument("targetInfo") as? Map<String, Any?>
 
-        val adRequest = builder.build()
+        val adRequest = AdmobRequestFactory().create(targetInfo)
 
         if (allAds[id] == null) {
           allAds[id!!] = InterstitialAd(registrar.context())
@@ -64,4 +64,5 @@ class AdmobInterstitial(private val registrar: PluginRegistry.Registrar): Method
       else -> result.notImplemented()
     }
   }
+
 }

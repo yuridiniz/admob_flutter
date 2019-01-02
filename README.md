@@ -81,6 +81,29 @@ The plugin provides all banner sizes supported by Admob, and will wrap the banne
 - `AdmobBannerSize.LEADERBOARD`: 728x90
 - `AdmobBannerSize.SMART_BANNER`: Wrap in a container with a size of your choice
 
+
+### Targeting Support
+
+```dart
+targetInfo = AdmobTargetInfo(
+  keywords: <String>['keyword1', 'keyword2', 'keyword3'],
+  contentUrl: 'https://flutter.io',
+  testDevices: <String>[],
+  tagForChildDirectedTreatment: false,
+  networkExtraBundle: <String, dynamic> {
+    "tag_for_under_age_of_consent" : true, //https://developers.google.com/admob/android/targeting#users_under_the_age_of_consent
+    "max_ad_content_rating": "G" //https://developers.google.com/admob/android/targeting#ad_content_filtering
+  }
+);
+
+AdmobBanner(
+  adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+  adSize: AdmobBannerSize.BANNER,
+  targetInfo: targetInfo
+)
+
+```
+
 ### Listening to Banner Ads events
 
 You can attach a listener to your ads in order to customize their behavior like this:
@@ -131,6 +154,29 @@ if (await interstitialAd.isLoaded) {
 
 // Finally, make sure you dispose the ad if you're done with it
 interstitialAd.dispose();
+```
+
+### Targeting Support
+
+```dart
+targetInfo = AdmobTargetInfo(
+  keywords: <String>['keyword1', 'keyword2', 'keyword3'],
+  contentUrl: 'https://flutter.io',
+  testDevices: <String>[],
+  tagForChildDirectedTreatment: false,
+  networkExtraBundle: <String, dynamic> {
+    "tag_for_under_age_of_consent" : true, //https://developers.google.com/admob/android/targeting#users_under_the_age_of_consent
+    "max_ad_content_rating": "G" //https://developers.google.com/admob/android/targeting#ad_content_filtering
+  }
+);
+
+AdmobInterstitial interstitialAd;
+
+interstitialAd = AdmobInterstitial(
+  adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+  targetInfo: targetInfo
+);
+
 ```
 
 ### Listening to Interstitial Ads events
@@ -196,6 +242,27 @@ AdmobReward rewardAd = AdmobReward(
     }
   },
 );
+```
+
+### Targeting Support
+
+```dart
+targetInfo = AdmobTargetInfo(
+  keywords: <String>['keyword1', 'keyword2', 'keyword3'],
+  contentUrl: 'https://flutter.io',
+  testDevices: <String>[],
+  tagForChildDirectedTreatment: false,
+  networkExtraBundle: <String, dynamic> {
+    "tag_for_under_age_of_consent" : true, //https://developers.google.com/admob/android/targeting#users_under_the_age_of_consent
+    "max_ad_content_rating": "G" //https://developers.google.com/admob/android/targeting#ad_content_filtering
+  }
+);
+
+AdmobReward rewardAd = AdmobReward(
+  adUnitId: 'ca-app-pub-3940256099942544/5224354917',
+  targetInfo: targetInfo
+);
+
 ```
 
 ### Showing Native Ads

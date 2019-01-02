@@ -18,20 +18,15 @@ class AdmobBanner(context: Context, messenger: BinaryMessenger, id: Int, args: H
   private val adView: AdView = AdView(context)
 
   init {
-    channel.setMethodCallHandler(this)
+      channel.setMethodCallHandler(this)
 
-    adView.adSize = getSize(args?.get("adSize") as HashMap<*, *>)
-    adView.adUnitId = args?.get("adUnitId") as String?
+      adView.adSize = getSize(args?.get("adSize") as HashMap<*, *>)
+      adView.adUnitId = args?.get("adUnitId") as String?
 
-    val builder = AdRequest.Builder()
+      val targetInfo = args["targetInfo"] as? Map<String,Any?>
+      val adRequest = AdmobRequestFactory().create(targetInfo)
 
-    if(args?.containsKey("testDeviceId")){
-      val testDeviceId = args?.get("testDeviceId") as String
-      builder.addTestDevice(testDeviceId)
-    }
-
-    val adRequest = builder.build()
-    adView.loadAd(adRequest)
+      adView.loadAd(adRequest)
   }
 
   private fun getSize(size: HashMap<*, *>) : AdSize {
